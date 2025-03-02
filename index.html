@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Telegram Mini App</title>
+</head>
+<body>
+  <h1>Welcome to the Mini App!</h1>
+  <div id="points">Points: 0</div>
+  <button id="claimMining">Claim Mining</button>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    const userId = tg.initDataUnsafe.user.id;
+
+    document.getElementById('claimMining').addEventListener('click', async () => {
+      const response = await fetch('/claimMining', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        document.getElementById('points').innerText = Points: ${data.points};
+      } else {
+        alert(data.message);
+      }
+    });
+  </script>
+</body>
+</html>

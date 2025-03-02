@@ -4,29 +4,53 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Telegram Mini App</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Welcome to the Mini App!</h1>
-  <div id="points">Points: 0</div>
-  <button id="claimMining">Claim Mining</button>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <h1>Welcome to the Mini App!</h1>
+      <p id="username">User: Loading...</p>
+      <p id="points">Points: 0</p>
+    </header>
 
-  <script>
-    const tg = window.Telegram.WebApp;
-    const userId = tg.initDataUnsafe.user.id;
+    <!-- Navigation -->
+    <nav>
+      <button onclick="showSection('tasks')">Tasks</button>
+      <button onclick="showSection('referrals')">Referrals</button>
+      <button onclick="showSection('mining')">Mining</button>
+      <button onclick="showSection('leaderboard')">Leaderboard</button>
+    </nav>
 
-    document.getElementById('claimMining').addEventListener('click', async () => {
-      const response = await fetch('/claimMining', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId }),
-      });
-      const data = await response.json();
-      if (data.success) {
-        document.getElementById('points').innerText = Points: ${data.points};
-      } else {
-        alert(data.message);
-      }
-    });
-  </script>
+    <!-- Sections -->
+    <section id="tasks" class="active">
+      <h2>Tasks</h2>
+      <ul id="task-list">
+        <!-- Tasks will be loaded here -->
+      </ul>
+    </section>
+
+    <section id="referrals">
+      <h2>Referrals</h2>
+      <p>Your Referral Code: <strong id="referral-code">Loading...</strong></p>
+      <p>Invited Friends: <span id="friend-list">0</span></p>
+    </section>
+
+    <section id="mining">
+      <h2>Mining</h2>
+      <p>Mining Status: <span id="mining-status">Loading...</span></p>
+      <button id="claim-mining" disabled>Claim Mining</button>
+    </section>
+
+    <section id="leaderboard">
+      <h2>Leaderboard</h2>
+      <ol id="leaderboard-list">
+        <!-- Leaderboard will be loaded here -->
+      </ol>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
